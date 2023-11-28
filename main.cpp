@@ -12,7 +12,7 @@ int main() {
     for (int i = 1; i <= 25; ++i) {
         list.Set(i, 0);
     }
-    for (int i = 0; i <= 100; ++i) {
+    for (int i = 0; i <= 50; ++i) {
         auto val = *list.Get(i);
         std::cout << std::to_string(val) << std::endl;
     }
