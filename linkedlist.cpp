@@ -12,9 +12,11 @@ public:
 
     T *Get(size_t);
 
-    bool Remove(size_t);
+    T* Remove(size_t);
 
     bool Set(size_t, T);
+
+    bool Insert(size_t, T);
 
 private:
     LinkedListEntry<T> *first = nullptr;
@@ -64,23 +66,43 @@ bool LinkedList<T>::Set(size_t idx, T value) {
     }
 }
 
-/// Returns false if no such item existed, and true if one did
+/// Returns false if this value is beyond the length of the list, and true if the insert succeeded
 template<typename T>
-bool LinkedList<T>::Remove(size_t idx) {
-    LinkedListEntry<T> *item = first;
-    if (item == nullptr) {
+bool LinkedList<T>::Insert(size_t idx, T value) {
+    auto previous = this->Get(idx);
+    if (previous == nullptr) {
         return false;
     }
+    auto entry = new LinkedListEntry<T>;
+    entry->data = value;
+    entry->next = previous;
+    if (idx == 0) {
+        first = entry;
+    } else {
+        auto item = this->Get(idx - 1);
+        item->next = entry;
+    }
+}
+
+/// Returns a null pointer if no such item existed, and a pointer to the item if one did
+template<typename T>
+T* LinkedList<T>::Remove(size_t idx) {
+    if (first == nullptr) {
+        return nullptr;
+    }
+    LinkedListEntry<T> *item = first;
     LinkedListEntry<T> *prev = first;
     for (size_t current_idx = 0; current_idx < idx; ++current_idx) {
         prev = item;
         item = item->next;
         if (item == nullptr) {
-            return false;
+            return nullptr;
         }
     }
     prev->next = item->next;
-    return true;
+    auto data = item->data;
+    delete item;
+    return &data;
 }
 
 template<typename T>
