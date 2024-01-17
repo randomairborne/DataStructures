@@ -1,7 +1,6 @@
 #ifndef DATASTRUCTURES_LINKEDLIST_CPP
 #define DATASTRUCTURES_LINKEDLIST_CPP
 
-#include <cstdlib>
 #include "linkedlist.h"
 
 template<typename T>
@@ -87,7 +86,7 @@ bool LinkedList<T>::Insert(size_t idx, T value) {
 
 /// Returns false if no such item existed, and true if it did
 template<typename T>
-bool LinkedList<T>::Remove(size_t idx) {
+bool LinkedList<T>::Remove(const size_t idx) {
     if (first == nullptr) {
         return false;
     }
