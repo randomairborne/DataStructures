@@ -12,7 +12,7 @@ public:
 
     T *Get(size_t);
 
-    T* Remove(size_t);
+    bool Remove(size_t);
 
     bool Set(size_t, T);
 
@@ -82,13 +82,14 @@ bool LinkedList<T>::Insert(size_t idx, T value) {
         auto item = this->Get(idx - 1);
         item->next = entry;
     }
+    return true;
 }
 
-/// Returns a null pointer if no such item existed, and a pointer to the item if one did
+/// Returns false if no such item existed, and true if it did
 template<typename T>
-T* LinkedList<T>::Remove(size_t idx) {
+bool LinkedList<T>::Remove(size_t idx) {
     if (first == nullptr) {
-        return nullptr;
+        return false;
     }
     LinkedListEntry<T> *item = first;
     LinkedListEntry<T> *prev = first;
@@ -96,13 +97,12 @@ T* LinkedList<T>::Remove(size_t idx) {
         prev = item;
         item = item->next;
         if (item == nullptr) {
-            return nullptr;
+            return false;
         }
     }
     prev->next = item->next;
-    auto data = item->data;
     delete item;
-    return &data;
+    return true;
 }
 
 template<typename T>
