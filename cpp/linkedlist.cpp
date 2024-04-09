@@ -1,33 +1,15 @@
-#ifndef DATASTRUCTURES_LINKEDLIST_CPP
-#define DATASTRUCTURES_LINKEDLIST_CPP
-
 #include "linkedlist.h"
+#include <cstddef>
 
 template<typename T>
-class LinkedList {
-public:
-    /// Takes ownership of value passed into it
-    void Push(T);
-
-    T *Get(size_t);
-
-    bool Remove(size_t);
-
-    bool Set(size_t, T);
-
-    bool Insert(size_t, T);
-
-private:
-    LinkedListEntry<T> *first = nullptr;
-};
-
-template<typename T>
-void LinkedList<T>::Push(T item) {
-    auto entry = new LinkedListEntry<T>;
-    entry->next = nullptr;
-    entry->data = item;
-    if (first == nullptr) {
-        first = entry;
+bool LinkedList<T>::Push(T item) {
+    T* a = malloc(sizeof(t));
+    if (a == nullptr) {
+        return false;
+    }
+    *a = item;
+    if (this.data == nullptr) {
+        data = entry;
     } else {
         LinkedListEntry<T> *prev = first;
         while (prev->next != nullptr) {
@@ -35,11 +17,12 @@ void LinkedList<T>::Push(T item) {
         }
         prev->next = entry;
     }
+    return true;
 }
 
 /// Returns a pointer to the data at this index, or null
 template<typename T>
-T *LinkedList<T>::Get(size_t idx) {
+T *LinkedList<T>::Get(std::size_t idx) {
     LinkedListEntry<T> *item = first;
     if (item == nullptr) {
         return nullptr;
@@ -103,15 +86,3 @@ bool LinkedList<T>::Remove(const size_t idx) {
     delete item;
     return true;
 }
-
-template<typename T>
-class LinkedListEntry {
-    friend class LinkedList<T>;
-
-public:
-    T data;
-protected:
-    LinkedListEntry<T> *next;
-};
-
-#endif
